@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -9,7 +10,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import {BleManager} from 'react-native-ble-plx';
+import {Base64, BleManager} from 'react-native-ble-plx';
 
 import {
   Colors,
@@ -25,20 +26,28 @@ type SectionProps = PropsWithChildren<{
 
 export const manager = new BleManager();
 
-const TARGET_ADDRESS = 'EC1FF10F-D43D-3B21-9D77-D6CBC851E5EC';
+// const TARGET_ADDRESS = 'EC1FF10F-D43D-3B21-9D77-D6CBC851E5EC';
+const TARGET_ADDRESS = '5629ECE4-2A55-3E86-C132-3ACF6CE376FE';
 
 const scanAndConnect = async () => {
-  manager.startDeviceScan(null, null, (error, device) => {
+  console.log('scanAndConnect() executing');
+  console.log('scanAndConnect() executing');
+  await manager.startDeviceScan(null, null, (error, device) => {
+    console.log('starting DeviceScan');
     if (error) {
       // Handle error (scanning will be stopped automatically)
+      console.log('error');
+      console.log(error);
       return;
     }
 
+    console.log('device', `${device?.id}  ${device?.name}`);
     // Check if it is a device you are looking for based on advertisement data
     // or other criteria.
     // if (device?.name === 'TI BLE Sensor Tag' || device?.name === 'SensorTag') {
     if (device?.id === TARGET_ADDRESS) {
       // Stop scanning as it's not necessary if you are scanning for one device.
+      console.log('found device - stopping scan');
       manager.stopDeviceScan();
 
       // Proceed with connection.
@@ -87,28 +96,70 @@ const scanAndConnect = async () => {
               }
             }
 
+            // for (const characteristic of characteristics) {
+            //   if (characteristic.isWritableWithResponse) {
+            //     await dev.writeCharacteristicWithResponseForService(
+            //       service.uuid,
+            //       characteristic.uuid,
+            //       '/gEABiABAAABAA==',
+            //     );
+            //   }
+            // }
+          }
+        })
+        .catch(_error => {
+          // Handle errors
+          console.log('caught errors');
+          console.log(_error);
+        });
+    } else {
+      console.log('device not found');
+    }
+  });
+};
+
+const writeData = async (data: Base64) => {
+  console.log('devices', await manager.devices([TARGET_ADDRESS]));
+  console.log(
+    'connected devices',
+    await manager.connectedDevices([TARGET_ADDRESS]),
+  );
+  await manager.devices([TARGET_ADDRESS]).then(devices => {
+    devices.forEach(device => {
+      device
+        .connect()
+        .then(dev => {
+          return dev.discoverAllServicesAndCharacteristics();
+        })
+        .then(async dev => {
+          // Do work on device with services and characteristics
+          console.log('writing data');
+
+          const services = await dev.services();
+          for (const service of services) {
+            const characteristics = await dev.characteristicsForService(
+              service.uuid,
+            );
+
             for (const characteristic of characteristics) {
               if (characteristic.isWritableWithResponse) {
                 await dev.writeCharacteristicWithResponseForService(
                   service.uuid,
                   characteristic.uuid,
-                  '/gEABiABAAABAA==',
+                  data,
                 );
               }
             }
-
-
           }
-        })
-        .catch(_error => {
-          // Handle errors
         });
-    }
+    });
   });
 };
 
-function Section({children, title}: SectionProps): JSX.Element {
+function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+
+  // const [isSearching, setSearching] = useState(false);
 
   useEffect(() => {
     const subscription = manager.onStateChange(state => {
@@ -119,33 +170,6 @@ function Section({children, title}: SectionProps): JSX.Element {
     }, true);
     return () => subscription.remove();
   }, [manager]);
-
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -165,20 +189,18 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+          <Button
+            title="Warm White"
+            onPress={() => writeData('/gEABiABAAABAA==')}
+          />
+          <Button
+            title="Multicolor"
+            onPress={() => writeData('/gEABiABAAAAAA==')}
+          />
+          <Button
+            title="Light Blue"
+            onPress={() => writeData('/gEABiABAA3d0A==')}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
