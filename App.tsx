@@ -1,11 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
+import React, {useEffect} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -16,6 +9,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import {BleManager} from 'react-native-ble-plx';
 
 import {
   Colors,
@@ -29,8 +23,103 @@ type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
+export const manager = new BleManager();
+
+const TARGET_ADDRESS = 'EC1FF10F-D43D-3B21-9D77-D6CBC851E5EC';
+
+const scanAndConnect = async () => {
+  manager.startDeviceScan(null, null, (error, device) => {
+    if (error) {
+      // Handle error (scanning will be stopped automatically)
+      return;
+    }
+
+    // Check if it is a device you are looking for based on advertisement data
+    // or other criteria.
+    // if (device?.name === 'TI BLE Sensor Tag' || device?.name === 'SensorTag') {
+    if (device?.id === TARGET_ADDRESS) {
+      // Stop scanning as it's not necessary if you are scanning for one device.
+      manager.stopDeviceScan();
+
+      // Proceed with connection.
+      device
+        .connect()
+        .then(dev => {
+          return dev.discoverAllServicesAndCharacteristics();
+        })
+        .then(async dev => {
+          // Do work on device with services and characteristics
+          console.log('writing to chars');
+
+          const services = await dev.services();
+          for (const service of services) {
+            const characteristics = await dev.characteristicsForService(
+              service.uuid,
+            );
+
+            for (const characteristic of characteristics) {
+              if (characteristic.isWritableWithResponse) {
+                await dev.writeCharacteristicWithResponseForService(
+                  service.uuid,
+                  characteristic.uuid,
+                  '/gEAAlAR',
+                );
+              }
+            }
+
+            for (const characteristic of characteristics) {
+              if (characteristic.isWritableWithResponse) {
+                await dev.writeCharacteristicWithResponseForService(
+                  service.uuid,
+                  characteristic.uuid,
+                  '/gEAAjAE',
+                );
+              }
+            }
+
+            for (const characteristic of characteristics) {
+              if (characteristic.isWritableWithResponse) {
+                await dev.writeCharacteristicWithResponseForService(
+                  service.uuid,
+                  characteristic.uuid,
+                  '/gEAEFAB' + 'MjAyMzAzMjkxMjM0MjI=',
+                );
+              }
+            }
+
+            for (const characteristic of characteristics) {
+              if (characteristic.isWritableWithResponse) {
+                await dev.writeCharacteristicWithResponseForService(
+                  service.uuid,
+                  characteristic.uuid,
+                  '/gEABiABAAABAA==',
+                );
+              }
+            }
+
+
+          }
+        })
+        .catch(_error => {
+          // Handle errors
+        });
+    }
+  });
+};
+
 function Section({children, title}: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+
+  useEffect(() => {
+    const subscription = manager.onStateChange(state => {
+      if (state === 'PoweredOn') {
+        scanAndConnect();
+        subscription.remove();
+      }
+    }, true);
+    return () => subscription.remove();
+  }, [manager]);
+
   return (
     <View style={styles.sectionContainer}>
       <Text
