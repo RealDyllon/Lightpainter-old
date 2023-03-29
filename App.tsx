@@ -1,20 +1,23 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
+  Text,
   useColorScheme,
   View,
 } from 'react-native';
 import {Base64, BleManager} from 'react-native-ble-plx';
+import {Slider} from '@miblanchard/react-native-slider';
 
 import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
 
 export const manager = new BleManager();
 
 // const TARGET_ADDRESS = 'EC1FF10F-D43D-3B21-9D77-D6CBC851E5EC';
-const TARGET_ADDRESS = '5629ECE4-2A55-3E86-C132-3ACF6CE376FE';
+// const TARGET_ADDRESS = '5629ECE4-2A55-3E86-C132-3ACF6CE376FE';
+const TARGET_ADDRESS = 'E4B296BF-80EF-E9ED-6FE7-EE5793AE0462';
 
 const scanAndConnect = async () => {
   console.log('scanAndConnect() executing');
@@ -146,7 +149,7 @@ const writeData = async (data: Base64) => {
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
-  // const [isSearching, setSearching] = useState(false);
+  const [brightness, setBrightness] = useState(20);
 
   useEffect(() => {
     const subscription = manager.onStateChange(state => {
@@ -156,7 +159,7 @@ function App(): JSX.Element {
       }
     }, true);
     return () => subscription.remove();
-  }, [manager]);
+  }, []);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -188,6 +191,27 @@ function App(): JSX.Element {
             title="Light Blue"
             onPress={() => writeData('/gEABiABAA3d0A==')}
           />
+
+          <Text>Brightness: {brightness}</Text>
+          <View style={{padding: 20}}>
+            <Slider
+              value={brightness}
+              minimumValue={0}
+              maximumValue={100}
+              step={1}
+              onSlidingComplete={value => {
+                console.log('value', value);
+                setBrightness(value[0]);
+                const hexValue = value[0].toString(16).padStart(2, '0');
+                console.log('hexValue', hexValue);
+                const encodedValue = encode(hexValue);
+                console.log('encoded value', encodedValue);
+                const payload = '/gEAAxAC' + encodedValue;
+                console.log('payload', payload);
+                writeData(payload);
+              }}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
