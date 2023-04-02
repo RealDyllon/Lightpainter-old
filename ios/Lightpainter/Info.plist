@@ -38,7 +38,7 @@
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>This app needs bluetooth</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>this app needs location</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>
