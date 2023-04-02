@@ -11,13 +11,31 @@ import {
 import {Base64, BleManager} from 'react-native-ble-plx';
 import {Slider} from '@miblanchard/react-native-slider';
 
-import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 export const manager = new BleManager();
 
 // const TARGET_ADDRESS = 'EC1FF10F-D43D-3B21-9D77-D6CBC851E5EC';
 // const TARGET_ADDRESS = '5629ECE4-2A55-3E86-C132-3ACF6CE376FE';
 const TARGET_ADDRESS = 'E4B296BF-80EF-E9ED-6FE7-EE5793AE0462';
+
+// const writeToDevice = async (dev: Device, data: Base64) => {
+//   const services = await dev.services();
+//
+//   for (const service of services) {
+//     const characteristics = await dev.characteristicsForService(service.uuid);
+//
+//     for (const characteristic of characteristics) {
+//       if (characteristic.isWritableWithResponse) {
+//         await dev.writeCharacteristicWithResponseForService(
+//           service.uuid,
+//           characteristic.uuid,
+//           data,
+//         );
+//       }
+//     }
+//   }
+// };
 
 const scanAndConnect = async () => {
   console.log('scanAndConnect() executing');
@@ -149,7 +167,7 @@ const writeData = async (data: Base64) => {
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const [brightness, setBrightness] = useState(20);
+  const [brightness, _setBrightness] = useState(20);
 
   useEffect(() => {
     const subscription = manager.onStateChange(state => {
@@ -174,7 +192,7 @@ function App(): JSX.Element {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
+        {/*<Header />*/}
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
@@ -201,14 +219,14 @@ function App(): JSX.Element {
               step={1}
               onSlidingComplete={value => {
                 console.log('value', value);
-                setBrightness(value[0]);
-                const hexValue = value[0].toString(16).padStart(2, '0');
-                console.log('hexValue', hexValue);
-                const encodedValue = encode(hexValue);
-                console.log('encoded value', encodedValue);
-                const payload = '/gEAAxAC' + encodedValue;
-                console.log('payload', payload);
-                writeData(payload);
+                // setBrightness(value[0]);
+                // const hexValue = value[0].toString(16).padStart(2, '0');
+                // console.log('hexValue', hexValue);
+                // const encodedValue = encode(hexValue);
+                // console.log('encoded value', encodedValue);
+                // const payload = '/gEAAxAC' + encodedValue;
+                // console.log('payload', payload);
+                // writeDataa(payload);
               }}
             />
           </View>
