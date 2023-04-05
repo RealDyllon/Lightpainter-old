@@ -2,14 +2,15 @@
  * @format
  */
 
-import * as React from 'react';
-import {AppRegistry} from 'react-native';
+import * as React from "react";
+import { AppRegistry } from "react-native";
 import {
   Provider as PaperProvider,
   MD3LightTheme as DefaultTheme,
-} from 'react-native-paper';
-import App from './App';
-import {name as appName} from './app.json';
+} from "react-native-paper";
+import App from "./App";
+import { name as appName } from "./app.json";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const theme = {
   ...DefaultTheme,
@@ -22,9 +23,11 @@ const theme = {
 
 function AppWithProviders() {
   return (
-    <PaperProvider theme={theme}>
-      <App />
-    </PaperProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <PaperProvider theme={theme}>
+        <App />
+      </PaperProvider>
+    </GestureHandlerRootView>
   );
 }
 
