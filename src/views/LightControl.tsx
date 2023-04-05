@@ -13,6 +13,7 @@ import { Slider } from "@miblanchard/react-native-slider";
 import React, { useState } from "react";
 import { LightModes, LightModesCodes } from "../constants/codes";
 import { writeData } from "../utils/writeData";
+import ColorWheel from "../components/ColorWheel";
 
 var Buffer = require("@craftzdog/react-native-buffer").Buffer;
 
@@ -112,6 +113,7 @@ const LightControl = () => {
             />
           </View>
           <Text style={styles.sectionHeader}>Color</Text>
+          <ColorWheel />
           <View />
         </View>
       </ScrollView>
