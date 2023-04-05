@@ -3,16 +3,18 @@ import {
   ScrollView,
   StatusBar,
   StyleProp,
+  StyleSheet,
   Text,
   View,
   ViewStyle,
 } from "react-native";
 import { Appbar, SegmentedButtons } from "react-native-paper";
 import { Slider } from "@miblanchard/react-native-slider";
-import { btoa } from "react-native-quick-base64";
 import React, { useState } from "react";
 import { LightModes, LightModesCodes } from "../constants/codes";
 import { writeData } from "../utils/writeData";
+
+var Buffer = require("@craftzdog/react-native-buffer").Buffer;
 
 const backgroundStyle: StyleProp<ViewStyle> = {
   backgroundColor: "#ffffff", // isDarkMode ? Colors.darker : Colors.lighter,
@@ -30,6 +32,18 @@ const LightControl = () => {
     writeData(LightModesCodes[value as LightModes]);
   };
 
+  const handleBrightnessChange = async (value: number[]) => {
+    console.log("value", value);
+    setBrightness(value[0]);
+    const hexValue = value[0].toString(16).padStart(2, "0");
+    console.log("hexValue", hexValue);
+    const encodedValue = Buffer.from(hexValue, "hex").toString("base64");
+    console.log("encoded value", encodedValue);
+    const payload = "/gEAAxAC" + encodedValue;
+    console.log("payload", payload);
+    await writeData(payload);
+  };
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -43,12 +57,10 @@ const LightControl = () => {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}
       >
-        {/*<Header />*/}
-        <View
-        // style={{
-        //   backgroundColor: isDarkMode ? Colors.black : Colors.white,
-        // }}
-        >
+        <View>
+          <Text style={[styles.sectionHeader, { marginTop: 0 }]}>
+            Light Mode
+          </Text>
           <SegmentedButtons
             value={lightMode}
             onValueChange={handleLightModeChange}
@@ -60,30 +72,15 @@ const LightControl = () => {
               paddingHorizontal: 20,
             }}
           />
-          <Text
-            style={{
-              paddingHorizontal: 20,
-            }}
-          >
-            Brightness: {brightness}
-          </Text>
-          <View style={{ padding: 20 }}>
+          <Text style={styles.sectionHeader}>Brightness</Text>
+          <View style={{ paddingHorizontal: 20 }}>
             <Slider
               value={brightness}
               minimumValue={0}
               maximumValue={100}
               step={1}
-              onSlidingComplete={async (value) => {
-                console.log("value", value);
-                setBrightness(value[0]);
-                const hexValue = value[0].toString(16).padStart(2, "0");
-                console.log("hexValue", hexValue);
-                const encodedValue = btoa(hexValue);
-                console.log("encoded value", encodedValue);
-                const payload = "/gEAAxAC" + encodedValue;
-                console.log("payload", payload);
-                await writeData(payload);
-              }}
+              onSlidingComplete={handleBrightnessChange}
+              // onValueChange={handleBrightnessChange}
               trackStyle={{
                 height: 20,
                 borderRadius: 99,
@@ -93,13 +90,29 @@ const LightControl = () => {
                 borderBottomRightRadius: 0,
                 backgroundColor: "#cccccc",
               }}
-              thumbStyle={{
-                width: 30,
-                height: 30,
-                borderRadius: 99,
-              }}
+              renderThumbComponent={() => (
+                <View
+                  style={{
+                    width: 30,
+                    height: 30,
+                    borderRadius: 99,
+                    backgroundColor: "black",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{ color: "white", fontWeight: "bold", fontSize: 18 }}
+                  >
+                    {brightness}
+                  </Text>
+                </View>
+              )}
             />
           </View>
+          <Text style={styles.sectionHeader}>Color</Text>
+          <View />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -107,3 +120,12 @@ const LightControl = () => {
 };
 
 export default LightControl;
+
+const styles = StyleSheet.create({
+  sectionHeader: {
+    padding: 20,
+    marginTop: 20,
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+});
