@@ -11,7 +11,6 @@ import { Appbar, SegmentedButtons } from "react-native-paper";
 import { Slider } from "@miblanchard/react-native-slider";
 import { btoa } from "react-native-quick-base64";
 import React, { useState } from "react";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { LightModes, LightModesCodes } from "../constants/codes";
 import { writeData } from "../utils/writeData";
 
