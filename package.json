@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@craftzdog/react-native-buffer": "^6.0.5",
     "@miblanchard/react-native-slider": "^2.3.1",
     "react": "18.2.0",
     "react-native": "0.71.12",
