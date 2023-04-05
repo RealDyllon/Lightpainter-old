@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -10,8 +9,21 @@ import {
 } from 'react-native';
 import {Base64, BleManager} from 'react-native-ble-plx';
 import {Slider} from '@miblanchard/react-native-slider';
-
+import {btoa} from 'react-native-quick-base64';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {Appbar, SegmentedButtons} from 'react-native-paper';
+
+enum LightModes {
+  Multicolor = 'Multicolor',
+  WarmWhite = 'WarmWhite',
+  StaticColor = 'StaticColor',
+}
+
+const LightModesCodes: Record<LightModes, Base64> = {
+  [LightModes.Multicolor]: '/gEABiABAAAAAA==',
+  [LightModes.WarmWhite]: '/gEABiABAAABAA==',
+  [LightModes.StaticColor]: '/gEABiABAA3d0A==', //  todo: change this to match color picker state
+};
 
 export const manager = new BleManager();
 
@@ -127,11 +139,14 @@ const scanAndConnect = async () => {
 };
 
 const writeData = async (data: Base64) => {
-  console.log('devices', await manager.devices([TARGET_ADDRESS]));
-  console.log(
-    'connected devices',
-    await manager.connectedDevices([TARGET_ADDRESS]),
-  );
+  // console.log('devices', await manager.devices([TARGET_ADDRESS]));
+  // console.log(
+  //   'connected devices',
+  //   await manager.connectedDevices([TARGET_ADDRESS]),
+  // );
+
+  console.log('writing data: ', data);
+
   await manager.devices([TARGET_ADDRESS]).then(devices => {
     devices.forEach(device => {
       device
@@ -167,7 +182,8 @@ const writeData = async (data: Base64) => {
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const [brightness, _setBrightness] = useState(20);
+  const [lightMode, setLightMode] = useState<LightModes>(LightModes.Multicolor);
+  const [brightness, setBrightness] = useState(20);
 
   useEffect(() => {
     const subscription = manager.onStateChange(state => {
@@ -180,53 +196,80 @@ function App(): JSX.Element {
   }, []);
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: Colors.lighter, // isDarkMode ? Colors.darker : Colors.lighter,
+    flex: 1,
+  };
+
+  const handleLightModeChange = (value: string) => {
+    setLightMode(value as LightModes);
+    writeData(LightModesCodes[value as LightModes]);
   };
 
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        barStyle={'dark-content'} // isDarkMode ? 'light-content' : 'dark-content'
         backgroundColor={backgroundStyle.backgroundColor}
       />
+      <Appbar>
+        <Appbar.Content title="Lightpainter" />
+      </Appbar>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         {/*<Header />*/}
         <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Button
-            title="Warm White"
-            onPress={() => writeData('/gEABiABAAABAA==')}
+        // style={{
+        //   backgroundColor: isDarkMode ? Colors.black : Colors.white,
+        // }}
+        >
+          <SegmentedButtons
+            value={lightMode}
+            onValueChange={handleLightModeChange}
+            buttons={Object.keys(LightModes).map(key => ({
+              value: key,
+              label: key,
+            }))}
+            style={{
+              paddingHorizontal: 20,
+            }}
           />
-          <Button
-            title="Multicolor"
-            onPress={() => writeData('/gEABiABAAAAAA==')}
-          />
-          <Button
-            title="Light Blue"
-            onPress={() => writeData('/gEABiABAA3d0A==')}
-          />
-
-          <Text>Brightness: {brightness}</Text>
+          <Text
+            style={{
+              paddingHorizontal: 20,
+            }}>
+            Brightness: {brightness}
+          </Text>
           <View style={{padding: 20}}>
             <Slider
               value={brightness}
               minimumValue={0}
               maximumValue={100}
               step={1}
-              onSlidingComplete={value => {
+              onSlidingComplete={async value => {
                 console.log('value', value);
-                // setBrightness(value[0]);
-                // const hexValue = value[0].toString(16).padStart(2, '0');
-                // console.log('hexValue', hexValue);
-                // const encodedValue = encode(hexValue);
-                // console.log('encoded value', encodedValue);
-                // const payload = '/gEAAxAC' + encodedValue;
-                // console.log('payload', payload);
-                // writeDataa(payload);
+                setBrightness(value[0]);
+                const hexValue = value[0].toString(16).padStart(2, '0');
+                console.log('hexValue', hexValue);
+                const encodedValue = btoa(hexValue);
+                console.log('encoded value', encodedValue);
+                const payload = '/gEAAxAC' + encodedValue;
+                console.log('payload', payload);
+                await writeData(payload);
+              }}
+              trackStyle={{
+                height: 20,
+                borderRadius: 99,
+              }}
+              minimumTrackStyle={{
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+                backgroundColor: '#cccccc',
+              }}
+              thumbStyle={{
+                width: 30,
+                height: 30,
+                borderRadius: 99,
               }}
             />
           </View>
