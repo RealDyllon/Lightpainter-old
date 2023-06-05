@@ -12,6 +12,7 @@ import ColorPicker, {
   returnedResults,
 } from "reanimated-color-picker";
 import { writeData } from "../utils/writeData";
+import { TARGET_ADDRESS_1 } from "../constants/uuids";
 
 const ColorWheel = () => {
   const onSelectColor = async ({ hex }: returnedResults) => {
@@ -22,7 +23,7 @@ const ColorWheel = () => {
     const encodedValue = Buffer.from(hexValue, "hex").toString("base64");
     const payload = "/gEABiAB" + encodedValue;
     console.log("payload", payload);
-    await writeData(payload);
+    await writeData([TARGET_ADDRESS_1], payload);
   };
 
   return (

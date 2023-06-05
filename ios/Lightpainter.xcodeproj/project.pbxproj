@@ -11,9 +11,9 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		7D152F4261CDE6CAB66263DD /* libPods-Lightpainter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD47EA019A7515006268359D /* libPods-Lightpainter.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		858DD854BF7D35C926748629 /* libPods-Lightpainter-LightpainterTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D7F24C25007CD1FADEA6F0 /* libPods-Lightpainter-LightpainterTests.a */; };
+		91E9775F6FC5D055AC1DF3F5 /* libPods-Lightpainter-LightpainterTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2931A62AE7C0C35250EDCEFF /* libPods-Lightpainter-LightpainterTests.a */; };
+		B73F87D6B2D5099FB3AEA20F /* libPods-Lightpainter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFD9001D937A3A4F0EA6AB9 /* libPods-Lightpainter.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,14 +36,30 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Lightpainter/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Lightpainter/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Lightpainter/main.m; sourceTree = "<group>"; };
-		28D7F24C25007CD1FADEA6F0 /* libPods-Lightpainter-LightpainterTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Lightpainter-LightpainterTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A82B666F8E134F717DFD996 /* Pods-Lightpainter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lightpainter.release.xcconfig"; path = "Target Support Files/Pods-Lightpainter/Pods-Lightpainter.release.xcconfig"; sourceTree = "<group>"; };
+		2931A62AE7C0C35250EDCEFF /* libPods-Lightpainter-LightpainterTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Lightpainter-LightpainterTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4600A16C7D52AF1E432F9584 /* Pods-Lightpainter-LightpainterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lightpainter-LightpainterTests.debug.xcconfig"; path = "Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5300DA6F29E7BFF800D9B278 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Octicons.ttf; path = ../Fonts/Octicons.ttf; sourceTree = "<group>"; };
+		5300DA7029E7BFF800D9B278 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = ../Fonts/MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
+		5300DA7129E7BFF800D9B278 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Fontisto.ttf; path = ../Fonts/Fontisto.ttf; sourceTree = "<group>"; };
+		5300DA7229E7BFF800D9B278 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SimpleLineIcons.ttf; path = ../Fonts/SimpleLineIcons.ttf; sourceTree = "<group>"; };
+		5300DA7329E7BFF900D9B278 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Zocial.ttf; path = ../Fonts/Zocial.ttf; sourceTree = "<group>"; };
+		5300DA7429E7BFF900D9B278 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = AntDesign.ttf; path = ../Fonts/AntDesign.ttf; sourceTree = "<group>"; };
+		5300DA7529E7BFF900D9B278 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = ../Fonts/FontAwesome.ttf; sourceTree = "<group>"; };
+		5300DA7629E7BFF900D9B278 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Entypo.ttf; path = ../Fonts/Entypo.ttf; sourceTree = "<group>"; };
+		5300DA7729E7BFF900D9B278 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = ../Fonts/Ionicons.ttf; sourceTree = "<group>"; };
+		5300DA7829E7BFFA00D9B278 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = ../Fonts/Foundation.ttf; sourceTree = "<group>"; };
+		5300DA7929E7BFFA00D9B278 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = ../Fonts/MaterialIcons.ttf; sourceTree = "<group>"; };
+		5300DA7A29E7BFFA00D9B278 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Feather.ttf; path = ../Fonts/Feather.ttf; sourceTree = "<group>"; };
+		5300DA7B29E7BFFA00D9B278 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Brands.ttf; path = ../Fonts/FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
+		5300DA7C29E7BFFA00D9B278 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EvilIcons.ttf; path = ../Fonts/EvilIcons.ttf; sourceTree = "<group>"; };
+		5300DA7D29E7BFFA00D9B278 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = ../Fonts/FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
+		5300DA7E29E7BFFA00D9B278 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = ../Fonts/FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
+		5387866DA37C19F6DE7CE7EE /* Pods-Lightpainter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lightpainter.debug.xcconfig"; path = "Target Support Files/Pods-Lightpainter/Pods-Lightpainter.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Lightpainter/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8BE12963445485509AAEDC7C /* Pods-Lightpainter-LightpainterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lightpainter-LightpainterTests.release.xcconfig"; path = "Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests.release.xcconfig"; sourceTree = "<group>"; };
-		9B3D63C024E64EE503313A0C /* Pods-Lightpainter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lightpainter.debug.xcconfig"; path = "Target Support Files/Pods-Lightpainter/Pods-Lightpainter.debug.xcconfig"; sourceTree = "<group>"; };
+		83B2DCD810DF531FD408A2B4 /* Pods-Lightpainter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lightpainter.release.xcconfig"; path = "Target Support Files/Pods-Lightpainter/Pods-Lightpainter.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F9A85A932955116862BD622C /* Pods-Lightpainter-LightpainterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lightpainter-LightpainterTests.debug.xcconfig"; path = "Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests.debug.xcconfig"; sourceTree = "<group>"; };
-		FD47EA019A7515006268359D /* libPods-Lightpainter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Lightpainter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAFD9001D937A3A4F0EA6AB9 /* libPods-Lightpainter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Lightpainter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFEB730268C5C3B38C72FC2B /* Pods-Lightpainter-LightpainterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lightpainter-LightpainterTests.release.xcconfig"; path = "Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				858DD854BF7D35C926748629 /* libPods-Lightpainter-LightpainterTests.a in Frameworks */,
+				91E9775F6FC5D055AC1DF3F5 /* libPods-Lightpainter-LightpainterTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D152F4261CDE6CAB66263DD /* libPods-Lightpainter.a in Frameworks */,
+				B73F87D6B2D5099FB3AEA20F /* libPods-Lightpainter.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +102,7 @@
 		13B07FAE1A68108700A75B9A /* Lightpainter */ = {
 			isa = PBXGroup;
 			children = (
+				5300DA6E29E7BFC700D9B278 /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -100,10 +117,33 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				FD47EA019A7515006268359D /* libPods-Lightpainter.a */,
-				28D7F24C25007CD1FADEA6F0 /* libPods-Lightpainter-LightpainterTests.a */,
+				FAFD9001D937A3A4F0EA6AB9 /* libPods-Lightpainter.a */,
+				2931A62AE7C0C35250EDCEFF /* libPods-Lightpainter-LightpainterTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5300DA6E29E7BFC700D9B278 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				5300DA7429E7BFF900D9B278 /* AntDesign.ttf */,
+				5300DA7629E7BFF900D9B278 /* Entypo.ttf */,
+				5300DA7C29E7BFFA00D9B278 /* EvilIcons.ttf */,
+				5300DA7A29E7BFFA00D9B278 /* Feather.ttf */,
+				5300DA7529E7BFF900D9B278 /* FontAwesome.ttf */,
+				5300DA7B29E7BFFA00D9B278 /* FontAwesome5_Brands.ttf */,
+				5300DA7E29E7BFFA00D9B278 /* FontAwesome5_Regular.ttf */,
+				5300DA7D29E7BFFA00D9B278 /* FontAwesome5_Solid.ttf */,
+				5300DA7129E7BFF800D9B278 /* Fontisto.ttf */,
+				5300DA7829E7BFFA00D9B278 /* Foundation.ttf */,
+				5300DA7729E7BFF900D9B278 /* Ionicons.ttf */,
+				5300DA7029E7BFF800D9B278 /* MaterialCommunityIcons.ttf */,
+				5300DA7929E7BFFA00D9B278 /* MaterialIcons.ttf */,
+				5300DA6F29E7BFF800D9B278 /* Octicons.ttf */,
+				5300DA7229E7BFF800D9B278 /* SimpleLineIcons.ttf */,
+				5300DA7329E7BFF900D9B278 /* Zocial.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -140,10 +180,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9B3D63C024E64EE503313A0C /* Pods-Lightpainter.debug.xcconfig */,
-				6A82B666F8E134F717DFD996 /* Pods-Lightpainter.release.xcconfig */,
-				F9A85A932955116862BD622C /* Pods-Lightpainter-LightpainterTests.debug.xcconfig */,
-				8BE12963445485509AAEDC7C /* Pods-Lightpainter-LightpainterTests.release.xcconfig */,
+				5387866DA37C19F6DE7CE7EE /* Pods-Lightpainter.debug.xcconfig */,
+				83B2DCD810DF531FD408A2B4 /* Pods-Lightpainter.release.xcconfig */,
+				4600A16C7D52AF1E432F9584 /* Pods-Lightpainter-LightpainterTests.debug.xcconfig */,
+				FFEB730268C5C3B38C72FC2B /* Pods-Lightpainter-LightpainterTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -155,12 +195,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "LightpainterTests" */;
 			buildPhases = (
-				8B35F8CDBF73E6B413252ACF /* [CP] Check Pods Manifest.lock */,
+				AC8704ED11E1DF79EF5994B9 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				56E40371B31CCB368EC4F3D5 /* [CP] Embed Pods Frameworks */,
-				9F72CFF2CDF4C2F7BB81FB5B /* [CP] Copy Pods Resources */,
+				97F7101A9B17B53ACC613BDF /* [CP] Embed Pods Frameworks */,
+				209E1399E534FD166BEEC9A7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -176,14 +216,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Lightpainter" */;
 			buildPhases = (
-				09FA3132F15FD044AC2C3132 /* [CP] Check Pods Manifest.lock */,
+				EB2B077ABBA56A1BEC42D17E /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				08CF5099EAA5CCE01AE932A5 /* [CP] Embed Pods Frameworks */,
-				756C549C982B3B872E28AEFC /* [CP] Copy Pods Resources */,
+				96CF788B329E82C68B749E70 /* [CP] Embed Pods Frameworks */,
+				70E7781D37A13432BA647705 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -266,63 +306,24 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		08CF5099EAA5CCE01AE932A5 /* [CP] Embed Pods Frameworks */ = {
+		209E1399E534FD166BEEC9A7 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Lightpainter/Pods-Lightpainter-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Lightpainter/Pods-Lightpainter-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Lightpainter/Pods-Lightpainter-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		09FA3132F15FD044AC2C3132 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Lightpainter-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		56E40371B31CCB368EC4F3D5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		756C549C982B3B872E28AEFC /* [CP] Copy Pods Resources */ = {
+		70E7781D37A13432BA647705 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -339,7 +340,41 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Lightpainter/Pods-Lightpainter-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8B35F8CDBF73E6B413252ACF /* [CP] Check Pods Manifest.lock */ = {
+		96CF788B329E82C68B749E70 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Lightpainter/Pods-Lightpainter-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Lightpainter/Pods-Lightpainter-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Lightpainter/Pods-Lightpainter-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		97F7101A9B17B53ACC613BDF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AC8704ED11E1DF79EF5994B9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -361,21 +396,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9F72CFF2CDF4C2F7BB81FB5B /* [CP] Copy Pods Resources */ = {
+		EB2B077ABBA56A1BEC42D17E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Lightpainter-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Lightpainter-LightpainterTests/Pods-Lightpainter-LightpainterTests-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -430,7 +470,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F9A85A932955116862BD622C /* Pods-Lightpainter-LightpainterTests.debug.xcconfig */;
+			baseConfigurationReference = 4600A16C7D52AF1E432F9584 /* Pods-Lightpainter-LightpainterTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -457,7 +497,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8BE12963445485509AAEDC7C /* Pods-Lightpainter-LightpainterTests.release.xcconfig */;
+			baseConfigurationReference = FFEB730268C5C3B38C72FC2B /* Pods-Lightpainter-LightpainterTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -481,7 +521,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9B3D63C024E64EE503313A0C /* Pods-Lightpainter.debug.xcconfig */;
+			baseConfigurationReference = 5387866DA37C19F6DE7CE7EE /* Pods-Lightpainter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -509,7 +549,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6A82B666F8E134F717DFD996 /* Pods-Lightpainter.release.xcconfig */;
+			baseConfigurationReference = 83B2DCD810DF531FD408A2B4 /* Pods-Lightpainter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

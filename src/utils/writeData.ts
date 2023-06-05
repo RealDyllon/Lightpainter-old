@@ -1,8 +1,8 @@
-import { Base64 } from "react-native-ble-plx";
+import { Base64, DeviceId } from "react-native-ble-plx";
 import { manager } from "../../App";
-import { TARGET_ADDRESS } from "../constants/uuids";
+import { TARGET_ADDRESS_1 } from "../constants/uuids";
 
-export const writeData = async (data: Base64) => {
+export const writeData = async (deviceIds: DeviceId[], data: Base64) => {
   // console.log('devices', await manager.devices([TARGET_ADDRESS]));
   // console.log(
   //   'connected devices',
@@ -11,7 +11,7 @@ export const writeData = async (data: Base64) => {
 
   console.log("writing data: ", data);
 
-  await manager.devices([TARGET_ADDRESS]).then((devices) => {
+  await manager.devices(deviceIds).then((devices) => {
     devices.forEach((device) => {
       device
         .connect()

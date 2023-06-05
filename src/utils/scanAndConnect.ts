@@ -1,11 +1,11 @@
 import { manager } from "../../App";
-import { TARGET_ADDRESS } from "../constants/uuids";
+import { TARGET_ADDRESSES } from "../constants/uuids";
 
 export const scanAndConnect = async () => {
   console.log("scanAndConnect() executing");
   console.log("scanAndConnect() executing");
   await manager.startDeviceScan(null, null, (error, device) => {
-    console.log("starting DeviceScan");
+    // console.log("starting DeviceScan");
     if (error) {
       // Handle error (scanning will be stopped automatically)
       console.log("error");
@@ -17,13 +17,21 @@ export const scanAndConnect = async () => {
     // Check if it is a device you are looking for based on advertisement data
     // or other criteria.
     // if (device?.name === 'TI BLE Sensor Tag' || device?.name === 'SensorTag') {
-    if (device?.id === TARGET_ADDRESS) {
+    // if (device?.id === TARGET_ADDRESS_1) {
+    // if (TARGET_ADDRESSES.includes(device?.id ?? "")) {
+    if (device?.name === "MZDS01") {
       // Stop scanning as it's not necessary if you are scanning for one device.
-      console.log("found device - stopping scan");
-      manager.stopDeviceScan();
+
+      console.log(`found device - ${device?.id} - ${device?.name}`);
+
+      // console.log("found device - stopping scan");
+      // manager.stopDeviceScan();
+
+      // clear any existing connections
+      // device!.cancelConnection();
 
       // Proceed with connection.
-      device
+      device!
         .connect()
         .then((dev) => {
           return dev.discoverAllServicesAndCharacteristics();
@@ -37,7 +45,6 @@ export const scanAndConnect = async () => {
             const characteristics = await dev.characteristicsForService(
               service.uuid
             );
-
             for (const characteristic of characteristics) {
               if (characteristic.isWritableWithResponse) {
                 await dev.writeCharacteristicWithResponseForService(
@@ -67,16 +74,15 @@ export const scanAndConnect = async () => {
                 );
               }
             }
-
-            // for (const characteristic of characteristics) {
-            //   if (characteristic.isWritableWithResponse) {
-            //     await dev.writeCharacteristicWithResponseForService(
-            //       service.uuid,
-            //       characteristic.uuid,
-            //       '/gEABiABAAABAA==',
-            //     );
-            //   }
-            // }
+            for (const characteristic of characteristics) {
+              if (characteristic.isWritableWithResponse) {
+                await dev.writeCharacteristicWithResponseForService(
+                  service.uuid,
+                  characteristic.uuid,
+                  "/gEABiABAAABAA=="
+                );
+              }
+            }
           }
         })
         .catch((_error) => {
@@ -85,7 +91,9 @@ export const scanAndConnect = async () => {
           console.log(_error);
         });
     } else {
-      console.log("device not found");
+      // console.log("device not found");
     }
   });
+  // await manager.stopDeviceScan();
+  // console.log("stopped scan");
 };

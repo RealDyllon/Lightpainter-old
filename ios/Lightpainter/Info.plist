@@ -39,6 +39,11 @@
 	<string>This app needs bluetooth</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>this app needs location</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>MaterialIcons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>

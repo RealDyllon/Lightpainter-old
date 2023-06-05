@@ -8,8 +8,8 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { Appbar, SegmentedButtons, Switch } from "react-native-paper";
-import React, { useEffect, useState } from "react";
+import { SegmentedButtons, Switch } from "react-native-paper";
+import React, { useEffect, useMemo, useState } from "react";
 import Animated, {
   FadeIn,
   FadeOut,
@@ -22,6 +22,9 @@ import ColorWheel from "../components/ColorWheel";
 import BrightnessSlider from "../components/BrightnessSlider";
 import { delay } from "../utils/delay";
 import StrobeSlider from "../components/StrobeSlider";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../App";
+import { useLightContext } from "../context/lightStore";
 
 var Buffer = require("@craftzdog/react-native-buffer").Buffer;
 
@@ -30,11 +33,28 @@ const backgroundStyle: StyleProp<ViewStyle> = {
   flex: 1,
 };
 
-const LightControl = () => {
+type LightControlProps = NativeStackScreenProps<
+  RootStackParamList,
+  "LightControl"
+>;
+
+function LightControl({ route }: LightControlProps) {
   // const isDarkMode = useColorScheme() === 'dark';
 
+  const {
+    state: { lights },
+  } = useLightContext();
+
+  const { deviceId } = route.params;
+
+  const deviceIds = useMemo(() => {
+    return deviceId
+      ? [deviceId]
+      : lights.filter((light) => light.grouped).map((light) => light.deviceId);
+  }, [deviceId, lights]);
+
   const [powerState, setPowerState] = useState(true);
-  const [lightMode, setLightMode] = useState<LightModes>(LightModes.Multicolor);
+  const [lightMode, setLightMode] = useState<LightModes>(LightModes.Rainbow);
   const [brightness, setBrightness] = useState(20);
   const [strobeFreq, setStrobeFreq] = useState(0);
 
@@ -46,16 +66,20 @@ const LightControl = () => {
 
   const handlePowerStateChange = async (newValue: boolean) => {
     setPowerState(newValue);
-    if (newValue) {
-      writeData("/gEAAwABAQ==");
-    } else {
-      writeData("/gEAAwABAA==");
-    }
+    deviceIds.map((deviceId) => {
+      if (newValue) {
+        writeData([deviceId], "/gEAAwABAQ==");
+      } else {
+        writeData([deviceId], "/gEAAwABAA==");
+      }
+    });
   };
 
   const handleLightModeChange = (value: string) => {
     setLightMode(value as LightModes);
-    writeData(LightModesCodes[value as LightModes]);
+    deviceIds.map((deviceId) => {
+      writeData([deviceId], LightModesCodes[value as LightModes]);
+    });
   };
 
   const handleBrightnessChange = async (value: number[]) => {
@@ -67,7 +91,9 @@ const LightControl = () => {
     console.log("encoded value", encodedValue);
     const payload = "/gEAAxAC" + encodedValue;
     console.log("payload", payload);
-    await writeData(payload);
+    deviceIds.map(async (deviceId) => {
+      await writeData([deviceId], payload);
+    });
   };
 
   const handleStrobeFreqChange = async (value: number[]) => {
@@ -78,27 +104,29 @@ const LightControl = () => {
     if (strobeFreq === 0) {
       return;
     }
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
       if (strobeFreq === 0) {
         return;
       }
-      writeData("/gEAAwABAA==");
-      delay((strobeFreq / 2) * 1000);
-      writeData("/gEAAwABAQ==");
+      deviceIds.map(async (deviceId) => {
+        await writeData([deviceId], "/gEAAwABAA==");
+        await delay((strobeFreq / 2) * 1000);
+        await writeData([deviceId], "/gEAAwABAQ==");
+      });
     }, strobeFreq * 1000);
 
     return () => clearInterval(interval);
-  }, [strobeFreq]);
+  }, [deviceId, deviceIds, strobeFreq]);
 
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
         barStyle={"dark-content"} // isDarkMode ? 'light-content' : 'dark-content'
-        backgroundColor={backgroundStyle.backgroundColor}
+        // backgroundColor={backgroundStyle.backgroundColor}
       />
-      <Appbar>
-        <Appbar.Content title="Lightpainter" />
-      </Appbar>
+      {/*<Appbar>*/}
+      {/*  <Appbar.Content title="Lightpainter" />*/}
+      {/*</Appbar>*/}
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}
@@ -154,7 +182,7 @@ const LightControl = () => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+}
 
 export default LightControl;
 
