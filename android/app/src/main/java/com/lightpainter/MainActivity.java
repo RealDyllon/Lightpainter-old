@@ -1,5 +1,6 @@
 package com.lightpainter;
 
+import android.os.Bundle; // for react navigation
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
@@ -32,4 +33,12 @@ public class MainActivity extends ReactActivity {
         DefaultNewArchitectureEntryPoint.getConcurrentReactEnabled() // concurrentRootEnabled
         );
   }
+
+  /**
+    * For React Navigation
+   */
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(null);
+     }
 }
