@@ -12,6 +12,7 @@ import App from "./App";
 import { name as appName } from "./app.json";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { LightContextProvider } from "./src/context/lightStore";
+import { DevicesContextProvider } from "./src/context/devicesStore";
 
 const theme = {
   ...DefaultTheme,
@@ -26,9 +27,11 @@ function AppWithProviders() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PaperProvider theme={theme}>
-        <LightContextProvider>
-          <App />
-        </LightContextProvider>
+        <DevicesContextProvider>
+          <LightContextProvider>
+            <App />
+          </LightContextProvider>
+        </DevicesContextProvider>
       </PaperProvider>
     </GestureHandlerRootView>
   );

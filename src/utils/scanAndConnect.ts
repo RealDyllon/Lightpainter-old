@@ -1,19 +1,27 @@
-import { manager } from "../../App";
-import { TARGET_ADDRESSES } from "../constants/uuids";
+import { MZDS01_LED } from "../classes/MZDS01_LED";
+import { LightModes } from "../constants/codes";
+import { BleManager } from "react-native-ble-plx";
+import { ActionType, Dispatch } from "../context/devicesStore";
 
-export const scanAndConnect = async () => {
+export const scanAndConnect = async (
+  manager: BleManager,
+  dispatch: Dispatch
+) => {
   console.log("scanAndConnect() executing");
   console.log("scanAndConnect() executing");
   await manager.startDeviceScan(null, null, (error, device) => {
     // console.log("starting DeviceScan");
     if (error) {
       // Handle error (scanning will be stopped automatically)
-      console.log("error");
+      console.log("startDeviceScan error");
       console.log(error);
       return;
     }
 
-    console.log("device", `${device?.id}  ${device?.name}`);
+    const today = new Date();
+    const time =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    console.log(time + "  device", `${device?.id}  ${device?.name}`);
     // Check if it is a device you are looking for based on advertisement data
     // or other criteria.
     // if (device?.name === 'TI BLE Sensor Tag' || device?.name === 'SensorTag') {
@@ -28,7 +36,7 @@ export const scanAndConnect = async () => {
       // manager.stopDeviceScan();
 
       // clear any existing connections
-      // device!.cancelConnection();
+      device!.cancelConnection();
 
       // Proceed with connection.
       device!
@@ -84,6 +92,22 @@ export const scanAndConnect = async () => {
               }
             }
           }
+
+          // add to store
+
+          const newLED = new MZDS01_LED(
+            device.id,
+            device.name ?? "Unnamed",
+            true,
+            LightModes.Rainbow,
+            "#ff0000"
+          );
+
+          // add newLED to devicesStore
+          dispatch({
+            type: ActionType.ON_CONNECT,
+            payload: newLED,
+          });
         })
         .catch((_error) => {
           // Handle errors

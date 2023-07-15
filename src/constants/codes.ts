@@ -7,7 +7,7 @@ export enum LightModes {
 }
 
 export const LightModesCodes: Record<LightModes, Base64> = {
-  [LightModes.Rainbow]: "/gEABiABAAAAAA==",
   [LightModes.WarmWhite]: "/gEABiABAAABAA==",
+  [LightModes.Rainbow]: "/gEABiABAAAAAA==",
   [LightModes.CustomColor]: "/gEABiABAA3d0A==", //  todo: change this to match color picker state
 };

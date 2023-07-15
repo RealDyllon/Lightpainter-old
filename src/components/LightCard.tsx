@@ -1,38 +1,45 @@
-import { Card, Button, Switch } from "react-native-paper";
+import { Card, Button, Switch, Text } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import React from "react";
-import { ActionTypes, Light } from "../context/lightStore";
-import { MD3LightTheme as DefaultTheme } from "react-native-paper";
+import { ActionType, LEDDevice } from "../context/devicesStore";
 
 interface LightCardProps {
   onPress: () => void;
   name: string;
-  light: Light;
+  light: LEDDevice;
   dispatch: React.Dispatch<any>;
+  isGrouped: boolean;
 }
 
-const LightCard = ({ onPress, name, light, dispatch }: LightCardProps) => {
+const LightCard = ({
+  onPress,
+  name,
+  light,
+  dispatch,
+  isGrouped,
+}: LightCardProps) => {
   // return null;
   return (
     <Card onPress={onPress} style={styles.card}>
       <Card.Title title={name} />
       <Card.Actions>
         <Button
-          icon={light.grouped ? "lightbulb-group" : "plus"}
+          icon={isGrouped ? "lightbulb-group" : "plus"}
           // iconColor={light.grouped ? "white" : DefaultTheme.colors.primary}
-          mode={light.grouped ? "contained" : "outlined"}
+          mode={isGrouped ? "contained" : "outlined"}
           // containerColor={light.grouped ? DefaultTheme.colors.primary : "white"}
+          // @ts-ignore
           size={28}
           onPress={() =>
-            light.grouped
+            isGrouped
               ? dispatch({
-                  type: ActionTypes.REMOVE_FROM_GROUP,
+                  type: ActionType.REMOVE_FROM_GROUP,
                   payload: {
                     deviceId: light.deviceId,
                   },
                 })
               : dispatch({
-                  type: ActionTypes.ADD_TO_GROUP,
+                  type: ActionType.ADD_TO_GROUP,
                   payload: {
                     deviceId: light.deviceId,
                     // grouped: !light.grouped,
@@ -40,21 +47,23 @@ const LightCard = ({ onPress, name, light, dispatch }: LightCardProps) => {
                 })
           }
         >
-          {light.grouped ? "Grouped" : "Add to Group"}
+          <Text>{isGrouped ? "Grouped" : "Add to Group"}</Text>
         </Button>
         <Switch
-          value={light.powerState}
-          disabled={light.grouped}
-          onValueChange={() =>
+          value={light.isOn}
+          disabled={isGrouped}
+          onValueChange={() => {
+            console.log("light", light);
+            console.log("light.isOn", light.isOn);
             dispatch({
-              type: ActionTypes.SET_POWER_STATE,
+              type: ActionType.SET_ISON,
               payload: {
                 deviceId: light.deviceId,
-                powerState: !light.powerState,
+                isOn: !light.isOn,
               },
-            })
-          }
-          // style={{ marginRight: 20, marginTop: 20 }}
+            });
+          }}
+          style={{ marginRight: 20, marginTop: 20 }}
         />
       </Card.Actions>
     </Card>

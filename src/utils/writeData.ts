@@ -1,6 +1,5 @@
 import { Base64, DeviceId } from "react-native-ble-plx";
 import { manager } from "../../App";
-import { TARGET_ADDRESS_1 } from "../constants/uuids";
 
 export const writeData = async (deviceIds: DeviceId[], data: Base64) => {
   // console.log('devices', await manager.devices([TARGET_ADDRESS]));

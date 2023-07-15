@@ -9,24 +9,25 @@ import {
   ViewStyle,
 } from "react-native";
 import { SegmentedButtons, Switch } from "react-native-paper";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import Animated, {
   FadeIn,
   FadeOut,
   useAnimatedStyle,
 } from "react-native-reanimated";
 
-import { LightModes, LightModesCodes } from "../constants/codes";
-import { writeData } from "../utils/writeData";
+import { LightModes } from "../constants/codes";
 import ColorWheel from "../components/ColorWheel";
 import BrightnessSlider from "../components/BrightnessSlider";
-import { delay } from "../utils/delay";
 import StrobeSlider from "../components/StrobeSlider";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
-import { useLightContext } from "../context/lightStore";
-
-var Buffer = require("@craftzdog/react-native-buffer").Buffer;
+import {
+  ActionType,
+  LEDDevice,
+  useDevicesContext,
+} from "../context/devicesStore";
+// import { useLightContext } from "../context/lightStore";
 
 const backgroundStyle: StyleProp<ViewStyle> = {
   backgroundColor: "#ffffff", // isDarkMode ? Colors.darker : Colors.lighter,
@@ -41,82 +42,104 @@ type LightControlProps = NativeStackScreenProps<
 function LightControl({ route }: LightControlProps) {
   // const isDarkMode = useColorScheme() === 'dark';
 
-  const {
-    state: { lights },
-  } = useLightContext();
+  const { state, dispatch } = useDevicesContext();
 
-  const { deviceId } = route.params;
+  const lights = state.devices;
 
-  const deviceIds = useMemo(() => {
-    return deviceId
-      ? [deviceId]
-      : lights.filter((light) => light.grouped).map((light) => light.deviceId);
-  }, [deviceId, lights]);
+  const { deviceId, isGroupControl } = route.params;
 
-  const [powerState, setPowerState] = useState(true);
-  const [lightMode, setLightMode] = useState<LightModes>(LightModes.Rainbow);
-  const [brightness, setBrightness] = useState(20);
-  const [strobeFreq, setStrobeFreq] = useState(0);
+  // if its a group, treat is like a single virtual device
+
+  const light: LEDDevice = useMemo(() => {
+    if (isGroupControl) {
+      return state.group;
+    }
+    const targetLight = lights.find((l) => l.deviceId === deviceId);
+    if (!targetLight) {
+      throw new Error("Light not found");
+    }
+    return targetLight;
+  }, [deviceId, isGroupControl, lights, state.group]);
+
+  // TODO: add better check for if this is group control
+  // const deviceIds = useMemo(() => {
+  //   return deviceId
+  //     ? [deviceId]
+  //     : lights.filter((light) => light.grouped).map((light) => light.deviceId);
+  // }, [deviceId, lights]);
+
+  // const [powerState, setPowerState] = useState(true);
+  // const [lightMode, setLightMode] = useState<LightModes>(LightModes.Rainbow);
+  // const [brightness, setBrightness] = useState(20);
+  // const [strobeFreq, setStrobeFreq] = useState(0);
 
   const colorWheelAnimationStyle = useAnimatedStyle(() => {
     return {
-      opacity: lightMode === LightModes.CustomColor ? 1 : 0,
+      opacity: light.lightMode === LightModes.CustomColor ? 1 : 0,
     };
   });
 
-  const handlePowerStateChange = async (newValue: boolean) => {
-    setPowerState(newValue);
-    deviceIds.map((deviceId) => {
-      if (newValue) {
-        writeData([deviceId], "/gEAAwABAQ==");
-      } else {
-        writeData([deviceId], "/gEAAwABAA==");
-      }
+  const handlePowerStateChange = async (value: boolean) => {
+    // light.isOn = value;
+    dispatch({
+      type: ActionType.SET_ISON,
+      payload: {
+        deviceId: light.deviceId,
+        isOn: value,
+      },
     });
   };
 
   const handleLightModeChange = (value: string) => {
-    setLightMode(value as LightModes);
-    deviceIds.map((deviceId) => {
-      writeData([deviceId], LightModesCodes[value as LightModes]);
+    // light.lightMode = value as LightModes;
+    dispatch({
+      type: ActionType.SET_LIGHTMODE,
+      payload: {
+        deviceId: light.deviceId,
+        lightMode: value as LightModes,
+      },
     });
   };
 
   const handleBrightnessChange = async (value: number[]) => {
-    console.log("value", value);
-    setBrightness(value[0]);
-    const hexValue = value[0].toString(16).padStart(2, "0");
-    console.log("hexValue", hexValue);
-    const encodedValue = Buffer.from(hexValue, "hex").toString("base64");
-    console.log("encoded value", encodedValue);
-    const payload = "/gEAAxAC" + encodedValue;
-    console.log("payload", payload);
-    deviceIds.map(async (deviceId) => {
-      await writeData([deviceId], payload);
+    // light.brightness = value[0];
+    dispatch({
+      type: ActionType.SET_BRIGHTNESS,
+      payload: {
+        deviceId: light.deviceId,
+        brightness: value[0],
+      },
     });
   };
 
   const handleStrobeFreqChange = async (value: number[]) => {
-    setStrobeFreq(value[0]);
+    // light.strobeFreq = value[0];
+    dispatch({
+      type: ActionType.SET_STROBE_FREQ,
+      payload: {
+        deviceId: light.deviceId,
+        strobeFreq: value[0],
+      },
+    });
   };
 
   useEffect(() => {
-    if (strobeFreq === 0) {
+    if (light.strobeFreq === 0) {
       return;
     }
     const interval = setInterval(async () => {
-      if (strobeFreq === 0) {
+      if (light.strobeFreq === 0) {
         return;
       }
-      deviceIds.map(async (deviceId) => {
-        await writeData([deviceId], "/gEAAwABAA==");
-        await delay((strobeFreq / 2) * 1000);
-        await writeData([deviceId], "/gEAAwABAQ==");
-      });
-    }, strobeFreq * 1000);
+      // deviceIds.map(async (deviceId) => {
+      //   await writeData([deviceId], "/gEAAwABAA==");
+      //   await delay((strobeFreq / 2) * 1000);
+      //   await writeData([deviceId], "/gEAAwABAQ==");
+      // });
+    }, light.strobeFreq * 1000);
 
     return () => clearInterval(interval);
-  }, [deviceId, deviceIds, strobeFreq]);
+  }, [light, light.strobeFreq]);
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -138,31 +161,36 @@ function LightControl({ route }: LightControlProps) {
             </Text>
             <View style={{ flex: 1 }} />
             <Switch
-              value={powerState}
+              value={light.isOn}
               onValueChange={handlePowerStateChange}
               style={{ marginRight: 20, marginTop: 20 }}
             />
           </View>
           <SegmentedButtons
-            value={lightMode}
+            value={light.lightMode}
             onValueChange={handleLightModeChange}
-            buttons={Object.keys(LightModes).map((key) => ({
-              value: key,
-              label: key,
-              // showSelectedCheck: true,
-            }))}
+            // buttons={Object.keys(LightModes).map((key) => ({
+            //   value: key,
+            //   label: key,
+            //   // showSelectedCheck: true,
+            // }))}
+            buttons={[
+              { value: "WarmWhite", label: "Warm White" },
+              { value: "Rainbow", label: "Rainbow" },
+              { value: "CustomColor", label: "Custom Color" },
+            ]}
             style={{
               paddingHorizontal: 20,
             }}
           />
           <Text style={styles.sectionHeader}>Brightness</Text>
           <BrightnessSlider
-            brightness={brightness}
+            brightness={light.brightness}
             handleBrightnessChange={handleBrightnessChange}
           />
           <Text style={styles.sectionHeader}>Strobe Frequency</Text>
           <StrobeSlider
-            frequency={strobeFreq}
+            frequency={light.strobeFreq}
             handleFrequencyChange={handleStrobeFreqChange}
           />
           <Animated.View
@@ -170,7 +198,7 @@ function LightControl({ route }: LightControlProps) {
             exiting={FadeOut}
             style={colorWheelAnimationStyle}
           >
-            {lightMode === LightModes.CustomColor && (
+            {light.lightMode === LightModes.CustomColor && (
               <>
                 <Text style={styles.sectionHeader}>Color</Text>
                 <ColorWheel />

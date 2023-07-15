@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./src/views/Home";
 import LightControl from "./src/views/LightControl";
 import { scanAndConnect } from "./src/utils/scanAndConnect";
+import { useDevicesContext } from "./src/context/devicesStore";
 
 export const manager = new BleManager();
 
@@ -22,11 +23,15 @@ export type RootStackParamList = {
 
 function App(): JSX.Element {
   const managerState = manager.state();
+  const [isScanActive, setScanASctive] = React.useState(false);
+
+  const { dispatch } = useDevicesContext();
 
   useEffect(() => {
     const subscription = manager.onStateChange((state) => {
-      if (state === State.PoweredOn) {
-        scanAndConnect().then((_r) => {});
+      if (state === State.PoweredOn && !isScanActive) {
+        setScanASctive(true);
+        scanAndConnect(manager, dispatch).then((_r) => {});
         subscription.remove();
       }
     }, true);
